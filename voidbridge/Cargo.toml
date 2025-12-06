@@ -1,0 +1,12 @@
+[package]
+name = "voidbridge"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+tun = { version = "0.5", features = ["async"] }
+clap = { version = "4", features = ["derive"] }
+# NEW: The "Lock" libraries
+chacha20poly1305 = "0.10"
+rand = "0.8"
