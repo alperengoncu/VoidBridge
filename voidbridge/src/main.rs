@@ -5,7 +5,7 @@ use chacha20poly1305::{
 use clap::{Parser, Subcommand};
 use std::error::Error;
 use std::net::SocketAddr;
-use std::process::Command; // NEW: To run shell commands
+use std::process::Command; 
 use std::sync::Arc;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UdpSocket;
@@ -28,7 +28,6 @@ enum Mode {
     Server {
         #[arg(long, default_value_t = 9000)]
         port: u16,
-        /// The physical interface to masquerade traffic through (e.g., enp0s3)
         #[arg(long)]
         nat_interface: Option<String>,
     },
@@ -78,7 +77,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     };
 
-    // --- SETUP TUN INTERFACE ---
+    
     let mut config = tun::Configuration::default();
     config
         .address(tun_ip.parse::<std::net::IpAddr>()?)
@@ -95,7 +94,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Interface {} is UP.", tun_ip);
 
-    // --- AUTOMATION: FIREWALL & ROUTING ---
+    // --- AUTOMATION: ROUTING ---
     if is_server {
         // SERVER AUTOMATION
         if let Some(iface) = nat_iface {
